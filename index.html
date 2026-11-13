@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CalculatorPro — الآلة الحاسبة المتقدمة | دقّة تامة كما Qalculate!</title>
+<meta name="description" content="آلة حاسبة متقدمة بلغة Python خالصة: قيم جذرية تامّة (√2/2 لا 0.7071…)، أكثر من 174 دالة، جبر رمزي، رسم دوال، مصفوفات، مساعد ذكي — تعمل بلا إنترنت.">
+<meta property="og:title" content="CalculatorPro — الآلة الحاسبة المتقدمة">
+<meta property="og:description" content="قيم تامّة لا عشري تقريبي: cos(45) = √2/2. مجانية، عربية أولًا، وتعمل بلا إنترنت.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23192258'/%3E%3Crect x='10' y='8' width='44' height='20' rx='5' fill='%23a5b4fc'/%3E%3Ctext x='32' y='23' font-size='13' text-anchor='middle' fill='%23192258' font-family='monospace'%3E%E2%88%9A2%3C/text%3E%3Cg fill='%237c8cf8'%3E%3Ccircle cx='19' cy='40' r='4.5'/%3E%3Ccircle cx='32' cy='40' r='4.5'/%3E%3Ccircle cx='45' cy='40' r='4.5'/%3E%3Ccircle cx='19' cy='53' r='4.5'/%3E%3Ccircle cx='32' cy='53' r='4.5'/%3E%3Ccircle cx='45' cy='53' r='4.5' fill='%23f472b6'/%3E%3C/g%3E%3C/svg%3E">
+<style>
+  :root{
+    --bg:#0b0f26; --bg2:#111737; --card:#141a3acc; --card-solid:#141a3a;
+    --ink:#e8ecff; --ink-dim:#9aa4d8; --line:#4a5cff40;
+    --blue:#7c8cf8; --violet:#a78bfa; --pink:#f472b6; --cyan:#67e8f9;
+    --ok:#34d399; --code-bg:#0d1230;
+    color-scheme: dark;
+  }
+  html[data-theme="light"]{
+    --bg:#f2f4ff; --bg2:#e6eaff; --card:#ffffffd9; --card-solid:#ffffff;
+    --ink:#1c2140; --ink-dim:#5a619a; --line:#7c8cf835;
+    --blue:#4f5ce0; --violet:#7c5cf7; --pink:#d4498f; --cyan:#0e8c9e;
+    --ok:#0d9668; --code-bg:#eef1ff; color-scheme: light;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; font-family:"Segoe UI", Tahoma, "Noto Kufi Arabic", sans-serif;
+    background:
+      radial-gradient(900px 420px at 85% -5%, #2a2f6e44 0%, transparent 65%),
+      radial-gradient(700px 380px at 10% 8%, #4a2f7e33 0%, transparent 60%),
+      var(--bg);
+    color:var(--ink); line-height:1.75;
+  }
+  a{color:var(--cyan); text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:1080px; margin:0 auto; padding:0 20px}
+
+  /* ---------- الرأس ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:color-mix(in srgb, var(--bg) 78%, transparent);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{display:flex; align-items:center; gap:18px; padding:12px 0}
+  .brand{display:flex; align-items:center; gap:10px; font-weight:700; font-size:18px; color:var(--ink)}
+  .brand svg{flex:none}
+  .badge{
+    font-size:12px; padding:2px 10px; border-radius:999px;
+    border:1px solid var(--line); color:var(--violet);
+    background:color-mix(in srgb, var(--violet) 12%, transparent);
+  }
+  .nav nav{margin-inline-start:auto; display:flex; gap:16px; flex-wrap:wrap}
+  .nav nav a{color:var(--ink-dim); font-size:14.5px}
+  .nav nav a:hover{color:var(--ink); text-decoration:none}
+  #themeBtn{
+    border:1px solid var(--line); background:transparent; color:var(--ink-dim);
+    border-radius:9px; padding:4px 10px; cursor:pointer; font-size:13px;
+  }
+  #themeBtn:hover{color:var(--ink)}
+  @media (max-width:760px){ .nav nav{display:none} }
+
+  /* ---------- البطل ---------- */
+  .hero{display:grid; grid-template-columns:1.15fr .85fr; gap:44px; align-items:center; padding:64px 0 30px}
+  @media (max-width:860px){ .hero{grid-template-columns:1fr; padding-top:40px} }
+  .hero h1{font-size:clamp(28px, 4.6vw, 46px); margin:0 0 14px; line-height:1.3}
+  .hero h1 .glow{
+    background:linear-gradient(90deg, var(--blue), var(--violet), var(--pink));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .hero p.lead{color:var(--ink-dim); font-size:17px; margin:0 0 26px}
+  .cta{display:flex; gap:12px; flex-wrap:wrap}
+  .btn{
+    display:inline-block; padding:11px 22px; border-radius:12px; font-weight:700;
+    font-size:15px; border:1px solid transparent; cursor:pointer;
+  }
+  .btn:hover{text-decoration:none; transform:translateY(-1px)}
+  .btn-primary{
+    background:linear-gradient(135deg, var(--blue), var(--violet));
+    color:#fff; box-shadow:0 8px 26px #7c8cf855;
+  }
+  .btn-ghost{border-color:var(--line); color:var(--ink); background:color-mix(in srgb, var(--card-solid) 60%, transparent)}
+
+  /* نموذج الآلة */
+  .mock{
+    background:var(--card); border:1px solid var(--line); border-radius:20px;
+    box-shadow:0 0 46px #4a5cff33, inset 0 0 34px #00000045; overflow:hidden;
+  }
+  .mock .screen{
+    font-family:"Cascadia Code", Consolas, monospace; direction:ltr; text-align:left;
+    background:linear-gradient(180deg, #101744, #0c1030);
+    border-bottom:1px solid var(--line); padding:16px 18px; font-size:14px;
+  }
+  .mock .screen div{display:flex; justify-content:space-between; gap:10px; padding:2.5px 0}
+  .mock .screen .r{color:var(--cyan)}
+  html[data-theme="light"] .mock .screen{background:#0d1230}
+  html[data-theme="light"] .mock .screen span{color:#e8ecff}
+  .mock .keys{display:grid; grid-template-columns:repeat(4,1fr); gap:8px; padding:14px}
+  .mock .keys b{
+    text-align:center; font-weight:600; font-size:13.5px; padding:9px 0; border-radius:9px;
+    background:color-mix(in srgb, var(--blue) 14%, transparent); border:1px solid var(--line);
+    color:var(--ink);
+  }
+  .mock .keys b.accent{background:color-mix(in srgb, var(--pink) 20%, transparent); border-color:#f472b655}
+
+  /* ---------- شريط الأرقام ---------- */
+  .stats{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:14px; padding:26px 0 10px;
+  }
+  @media (max-width:760px){ .stats{grid-template-columns:repeat(2,1fr)} }
+  .stat{
+    background:var(--card); border:1px solid var(--line); border-radius:16px;
+    text-align:center; padding:16px 8px;
+  }
+  .stat b{display:block; font-size:26px; color:var(--violet)}
+  .stat span{font-size:13.5px; color:var(--ink-dim)}
+
+  /* ---------- المقاطع العامة ---------- */
+  section{padding:46px 0 10px}
+  h2{font-size:clamp(22px, 3vw, 30px); margin:0 0 8px}
+  .sub{color:var(--ink-dim); margin:0 0 24px}
+  .grid{display:grid; grid-template-columns:repeat(3,1fr); gap:14px}
+  @media (max-width:920px){ .grid{grid-template-columns:repeat(2,1fr)} }
+  @media (max-width:640px){ .grid{grid-template-columns:1fr} }
+  .card{
+    background:var(--card); border:1px solid var(--line); border-radius:16px;
+    padding:18px 18px 14px;
+  }
+  .card .ico{font-size:24px}
+  .card h3{margin:8px 0 6px; font-size:16.5px}
+  .card p{margin:0; color:var(--ink-dim); font-size:14px}
+
+  /* أمثلة الدقّة */
+  .demo{
+    background:var(--card); border:1px solid var(--line); border-radius:18px; overflow:hidden;
+  }
+  .demo .bar{
+    display:flex; gap:8px; align-items:center; padding:10px 16px;
+    border-bottom:1px solid var(--line); font-size:13px; color:var(--ink-dim);
+  }
+  .demo .dot{width:9px; height:9px; border-radius:50%}
+  .chip{
+    font-family:Consolas, "Cascadia Code", monospace; direction:ltr;
+    display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;
+    padding:10px 18px; font-size:14.5px; border-bottom:1px dashed var(--line);
+  }
+  .chip:last-child{border-bottom:none}
+  .chip .q{color:var(--ink-dim)}
+  .chip .a{color:var(--ok); font-weight:700}
+  .chip .a.was{color:var(--ink-dim); font-weight:400; text-decoration:line-through}
+
+  /* الجدول المقارن */
+  table{width:100%; border-collapse:collapse; font-size:14.5px; background:var(--card); border-radius:14px; overflow:hidden}
+  th,td{padding:10px 14px; text-align:right; border-bottom:1px solid var(--line)}
+  th{background:color-mix(in srgb, var(--blue) 14%, transparent); font-size:13.5px; color:var(--ink-dim)}
+  tr:last-child td{border-bottom:none}
+  td .yes{color:var(--ok); font-weight:700}
+  td .part{color:#fbbf24}
+  td .no{color:var(--ink-dim)}
+
+  /* السجل */
+  .log{display:grid; gap:12px; grid-template-columns:repeat(2,1fr)}
+  @media (max-width:760px){ .log{grid-template-columns:1fr} }
+  .log .card h3{color:var(--cyan)}
+  .log ul{margin:0; padding-inline-start:18px; color:var(--ink-dim); font-size:14px}
+  .log code, td code, p code{
+    font-family:Consolas, monospace; direction:ltr; unicode-bidi:embed;
+    background:var(--code-bg); border:1px solid var(--line);
+    border-radius:6px; padding:1px 7px; font-size:13px;
+  }
+
+  /* التحميل */
+  .dl{
+    display:flex; gap:26px; align-items:center; flex-wrap:wrap;
+    background:linear-gradient(135deg, #1b2350cc, #2a1b52cc);
+    border:1px solid var(--line); border-radius:20px; padding:30px 28px;
+  }
+  @media (max-width:760px){ .dl{flex-direction:column; text-align:center} }
+  .dl .meta{color:#cfd6ff; font-size:14px}
+  .dl .meta li{margin:2px 0}
+  .warning{border-radius:10px; background:color-mix(in srgb, #fbbf24 14%, transparent);
+    border:1px dashed #fbbf2466; padding:8px 14px; font-size:13px; color:#fbbf24}
+
+  /* الأسئلة */
+  details{
+    background:var(--card); border:1px solid var(--line); border-radius:14px;
+    padding:6px 18px; margin-bottom:10px;
+  }
+  summary{cursor:pointer; font-weight:700; padding:8px 0; font-size:15px}
+  details p{color:var(--ink-dim); font-size:14px; margin:6px 0 12px}
+
+  /* الفريق */
+  .team{display:grid; grid-template-columns:repeat(3,1fr); gap:12px}
+  @media (max-width:640px){ .team{grid-template-columns:1fr 1fr} }
+  .team .card{text-align:center; padding:16px 8px}
+  .team .sup{
+    grid-column:1 / -1; text-align:center;
+    background:linear-gradient(135deg, #4a5cff22, #a78bfa22);
+  }
+
+  footer{margin-top:60px; border-top:1px solid var(--line); padding:26px 0 34px; color:var(--ink-dim); font-size:13.5px}
+  footer .wrap{display:flex; justify-content:space-between; gap:14px; flex-wrap:wrap}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#top">
+      <svg width="30" height="30" viewBox="0 0 64 64" aria-hidden="true">
+        <rect width="64" height="64" rx="14" fill="#192258"/>
+        <rect x="10" y="8" width="44" height="20" rx="5" fill="#a5b4fc"/>
+        <text x="32" y="23" font-size="13" text-anchor="middle" fill="#192258" font-family="monospace">√2</text>
+        <g fill="#7c8cf8">
+          <circle cx="19" cy="40" r="4.5"/><circle cx="32" cy="40" r="4.5"/>
+          <circle cx="45" cy="40" r="4.5"/><circle cx="19" cy="53" r="4.5"/>
+          <circle cx="32" cy="53" r="4.5"/><circle cx="45" cy="53" r="4.5" fill="#f472b6"/>
+        </g>
+      </svg>
+      CalculatorPro
+    </a>
+    <span class="badge">29.11.0</span>
+    <nav>
+      <a href="#features">المميزات</a>
+      <a href="#exact">الدقّة التامّة</a>
+      <a href="#vs">المقارنة</a>
+      <a href="#news">المستجدّات</a>
+      <a href="#download">التحميل</a>
+      <a href="#faq">الأسئلة</a>
+      <a href="#team">المطوّر</a>
+    </nav>
+    <button id="themeBtn" type="button" aria-label="تبديل النمط">☀/🌙</button>
+  </div>
+</header>
+
+<main class="wrap" id="top">
+
+  <!-- ==================== البطل ==================== -->
+  <section class="hero">
+    <div>
+      <h1>حاسبة <span class="glow">بلا «تقريب مقبول»</span> — دقّة تامّة كما Qalculate!</h1>
+      <p class="lead">
+        آلة حاسبة متقدمة مكتوبة بلغة Python خالصة: الناتج ليس «0.70710678…»
+        بل <b>√2/2</b> تامًّا. أكثر من 174 دالة، جبر رمزي، رسم دوال، مصفوفات
+        وإحصاء ومساعد ذكي — واجهة عربية أولًا، وتعمل بلا إنترنت.
+      </p>
+      <div class="cta">
+        <a class="btn btn-primary" href="#download">⬇ تنزيل لويندوز</a>
+        <a class="btn btn-ghost" href="#exact">جرّب أمثلة الدقّة</a>
+      </div>
+    </div>
+    <div class="mock" aria-hidden="true">
+      <div class="screen">
+        <div><span>cos(45)</span><span class="r">√2/2</span></div>
+        <div><span>sqrt(8)</span><span class="r">2√2</span></div>
+        <div><span>tan(15)</span><span class="r">2 − √3</span></div>
+        <div><span>sin(pi/4)</span><span class="r">√2/2</span></div>
+        <div><span>exp(ln(2))</span><span class="r">2</span></div>
+        <div><span>1/(2 − √3)</span><span class="r">2 + √3</span></div>
+      </div>
+      <div class="keys">
+        <b>sin</b><b>cos</b><b>tan</b><b>√x</b>
+        <b>ln</b><b>log</b><b>x^y</b><b>n!</b>
+        <b>π</b><b>e</b><b>(</b><b>)</b>
+        <b>M+</b><b>حفظ</b><b>RUN</b><b class="accent">AC</b>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== أرقام ==================== -->
+  <div class="stats">
+    <div class="stat"><b>174+</b><span>دالة مسجَّلة وموثَّقة</span></div>
+    <div class="stat"><b>1779</b><span>اختبارًا ناجحًا — 0 فشل</span></div>
+    <div class="stat"><b>11</b><span>لغة واجهة</span></div>
+    <div class="stat"><b>~45MB</b><span>حجم تنفيذي خفيف</span></div>
+  </div>
+
+  <!-- ==================== المميزات ==================== -->
+  <section id="features">
+    <h2>ما تكسبه</h2>
+    <p class="sub">كل شيء في تطبيق واحد، بلا إنترنت وبلا اشتراكات.</p>
+    <div class="grid">
+      <div class="card"><div class="ico">🧮</div><h3>نواة الدقّة الرمزية</h3><p>جبر جذور تامّ (<code>sqrt(8) = 2√2</code>)، قيم مثلثية جذرية، وكسور دقيقة لا تفقد اتساقها أبدًا.</p></div>
+      <div class="card"><div class="ico">📐</div><h3>جبر رمزي كامل</h3><p>تكبير وتفكيك وبسط (<code>expand</code>/<code>factor</code>)، حل معادلات، ومتغيّرات مسجَّلة مع سجل و<code>ans</code>.</p></div>
+      <div class="card"><div class="ico">📊</div><h3>إحصاء ومصفوفات</h3><p>انحراف معياري، تحليل انحدار، محدّدات وقوائم ومجموعات ومنطق.</p></div>
+      <div class="card"><div class="ico">📈</div><h3>رسم الدوال</h3><p>اكتب دالة مثل <code>sin(x)</code> فيُرسم المنحنى فورًا، مع تحليل سلوكه عند النقاط المهمّة.</p></div>
+      <div class="card"><div class="ico">🔄</div><h3>تحويل الوحدات</h3><p>أطوال ومساحات وحجوم ودرجات حرارة — تحويل فوري بين أنظمة القياس.</p></div>
+      <div class="card"><div class="ico">🤖</div><h3>مساعد ذكي</h3><p>لوحة مساعد تفهم العربية الطبيعية، مفتاح API مشفَّر داخل الجهاز (يُخزَّن بلا نص صريح).</p></div>
+      <div class="card"><div class="ico">🎨</div><h3>ثيمات زجاجية</h3><p>زجاج بنفسجي، سايبر نيون، شاشة LCD بخطوط مسح — وشعار يلمع عند الإقلاع.</p></div>
+      <div class="card"><div class="ico">🌍</div><h3>عربية أولًا + 11 لغة</h3><p>واجهة RTL أصلية وأرقام عربية، مع ترجمات جاهزة لعشر لغات إضافية.</p></div>
+      <div class="card"><div class="ico">🔒</div><h3>تحديثات موقَّعة</h3><p>توقيع رقمي + تجزئة SHA‑256 قبل أي تثبيت — لا تمرّ أي ملفات مجهولة المصدر.</p></div>
+    </div>
+  </section>
+
+  <!-- ==================== الدقّة ==================== -->
+  <section id="exact">
+    <h2>الدقّة التامّة — الفرق الذي تراه بعينك</h2>
+    <p class="sub">الحاسبات التقليدية تخزَّن عشريًّا فيُفقد الاتساق: <code>√2² ≠ 2</code>. هنا القيمة تبقى رمزًا.</p>
+    <div class="demo">
+      <div class="bar">
+        <span class="dot" style="background:#f472b6"></span>
+        <span class="dot" style="background:#fbbf24"></span>
+        <span class="dot" style="background:#34d399"></span>
+        <span style="margin-inline-start:8px">محرّك القيمة الدقيقة — وضع الدرجات/الراديان تلقائيًّا</span>
+      </div>
+      <div class="chip"><span class="q">cos(45)</span><span class="a">√2/2</span></div>
+      <div class="chip"><span class="q">sqrt(2) * sqrt(3)</span><span class="a">√6</span></div>
+      <div class="chip"><span class="q">sqrt(2)^2</span><span class="a">2</span><span class="a was">2.000000000000014</span></div>
+      <div class="chip"><span class="q">tan(15)</span><span class="a">2 − √3</span></div>
+      <div class="chip"><span class="q">1/(2 − √3)</span><span class="a">2 + √3</span></div>
+      <div class="chip"><span class="q">sin(18)</span><span class="a">(√5 − 1)/4</span></div>
+      <div class="chip"><span class="q">sin(pi/4) — راديان</span><span class="a">√2/2</span><span class="a was">0.70710678…</span></div>
+      <div class="chip"><span class="q">exp(ln(2))</span><span class="a">2</span><span class="a was">2.0000000000000004</span></div>
+      <div class="chip"><span class="q">sin(31)</span><span class="a">0.515038074910054…</span><span class="a" style="color:var(--ink-dim)">عائم صادق — لا جذر وهمي</span></div>
+    </div>
+  </section>
+
+  <!-- ==================== مقارنة ==================== -->
+  <section id="vs">
+    <h2>مقابل Qalculate!</h2>
+    <p class="sub">نقيس أنفسنا بالمرجع الأقوى — لنقترب منه أكثر مع كل إصدار.</p>
+    <table>
+      <thead><tr><th>القدرة</th><th>Qalculate!</th><th>CalculatorPro 29.11.0</th></tr></thead>
+      <tbody>
+        <tr><td>القيم الجذرية التامّة (√8 → 2√2)</td><td><span class="yes">✅</span></td><td><span class="yes">✅</span></td></tr>
+        <tr><td>مثلثات تامّة بالدرجات + العائلة الذهبية</td><td><span class="yes">✅</span></td><td><span class="yes">✅</span> وبعكسها تامًّا أيضًا (asin(0.5) = 30)</td></tr>
+        <tr><td>π الرمزية في الراديان — sin(pi/4) = √2/2</td><td><span class="yes">✅</span></td><td><span class="yes">✅</span> (29.11.0)</td></tr>
+        <tr><td>i^(ln k) / ln(e^k) تامّة</td><td><span class="yes">✅</span></td><td><span class="yes">✅</span> (29.11.0)</td></tr>
+        <tr><td>واجهة عربية RTL + 11 لغة</td><td><span class="no">❌</span></td><td><span class="yes">✅</span></td></tr>
+        <tr><td>يعمل بلا إنترنت كليًّا</td><td><span class="yes">✅</span></td><td><span class="yes">✅</span></td></tr>
+        <tr><td>وحدات SI كاملة</td><td><span class="yes">✅</span></td><td><span class="part">جزئيّ</span> (تحويلات جاهزة، الباقي قيد البناء)</td></tr>
+        <tr><td>الجذور المركّبة (√(10+2√5))</td><td><span class="yes">✅</span></td><td><span class="no">المرحلة 3</span></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ==================== المستجدّات ==================== -->
+  <section id="news">
+    <h2>آخر المستجدّات</h2>
+    <div class="log">
+      <div class="card">
+        <h3>29.11.0 — الراديان الرمزي (2026)</h3>
+        <ul>
+          <li><code>sin(pi/4)</code> → <b>√2/2</b> في وضع rad — التقاط كل صورة <code>k·π/m</code> حتى قواطع 180 كاملة.</li>
+          <li><code>exp(ln(2))</code> → <b>2</b> و<code>ln(exp(3))</code> → <b>3</b> — وداعًا لِـ <code>2.0000000000000004</code>.</li>
+          <li>4 ضوابط ذهبية جديدة → 88/0 في الفحص الذاتي.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>29.10.0 — النواة الدقيقة (2026)</h3>
+        <ul>
+          <li>محرّك جبر الجذور <code>Surd</code>: <code>sqrt(8) = 2√2</code> و<code>sqrt(2)^2 = 2</code> تمامًا.</li>
+          <li>جدول مثلثات 0–90 (مضاعفات 15°) + عائلة النسبة الذهبية 18°/36°/54°/72°.</li>
+          <li>عرض بأسلوب Qalculate!: <code>√2/2</code> و<code>(√6 − √2)/4</code> حرفيًّا.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== التحميل ==================== -->
+  <section id="download">
+    <h2>التحميل</h2>
+    <div class="dl">
+      <div>
+        <a class="btn btn-primary" href="https://github.com/mommmeda/CalculatorPro/releases/latest">⬇ آخر إصدار لويندوز</a>
+      </div>
+      <div class="meta">
+        <b>الإصدار 29.11.0</b> — Windows 7/10/11 (64‑bit)
+        <ul>
+          <li>ملف تنفيذي واحد ~45MB — لا يحتاج تثبيتًا ولا بايثون.</li>
+          <li>موقَّع رقميًّا + SHA‑256 — يتحقّق المحدِّث من التوقيع قبل أي تحديث.</li>
+          <li>برنامج مغلق المصدر — التوزيع عبر ملف تنفيذي موقَّع فقط.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== الأسئلة ==================== -->
+  <section id="faq">
+    <h2>أسئلة متكرّرة</h2>
+    <details open>
+      <summary>هل يحتاج تثبيت بايثون؟</summary>
+      <p>لا. النسخة التنفيذية تحمل بيئتها كاملة — لا يحتاج تثبيتًا ولا أي متطلّبات.</p>
+    </details>
+    <details>
+      <summary>لماذا تُظهر الآلة بعض الناتجات كجذور؟</summary>
+      <p>لأنها أدقّ: <code>√2/2</code> هي القيمة الفعلية، بينما <code>0.70710678</code> تقريب تفقد كل عملية لاحقة شيئًا من دقّته. ويمكن دائمًا طلب العرض العشري بضغطة زر.</p>
+    </details>
+    <details>
+      <summary>هل تعمل دون إنترنت؟</summary>
+      <p>نعم — كل الميزات تعمل محليًّا، والمساعد الذكي اختياري ويحتاج مفتاحًا تضعه بنفسك.</p>
+    </details>
+    <details>
+      <summary>هل هي مجانية؟</summary>
+      <p>مجاني للاستخدام الشخصي وغير التجاري. البرنامج مغلق المصدر — يُوزَّع كملف تنفيذي جاهز فقط، ولا يُتاح كود المصدر للتحميل أو التعديل.</p>
+    </details>
+  </section>
+
+  <!-- ==================== الفريق ==================== -->
+  <section id="team">
+    <h2>المطوّر</h2>
+    <div class="team">
+      <div class="card sup"><h3>🎓 التصميم والتنفيذ</h3><p>محمود السيد محمد علي</p></div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 محمود السيد محمد علي — CalculatorPro. جميع الحقوق محفوظة.</span>
+    <span><a href="#top">↑ أعلى الصفحة</a></span>
+  </div>
+</footer>
+
+<script>
+  // تبديل النمط (داكن/فاتح) — بلا أي اعتماد خارجي
+  (function () {
+    var btn = document.getElementById("themeBtn");
+    var root = document.documentElement;
+    var saved = null;
+    try { saved = localStorage.getItem("cp-theme"); } catch (e) {}
+    if (saved) root.setAttribute("data-theme", saved);
+    btn.addEventListener("click", function () {
+      var next = root.getAttribute("data-theme") === "light" ? "dark" : "light";
+      root.setAttribute("data-theme", next);
+      try { localStorage.setItem("cp-theme", next); } catch (e) {}
+    });
+  })();
+</script>
+</body>
+</html>
