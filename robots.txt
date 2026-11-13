@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mommmeda.github.io/CalculatorPro-site/sitemap.xml
