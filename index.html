@@ -19,7 +19,7 @@
   "description": "آلة حاسبة متقدمة: قيم جذرية تامّة (√2/2 لا 0.7071…)، أكثر من 174 دالة، جبر رمزي، رسم دوال، مصفوفات — تعمل بلا إنترنت.",
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
   "author": { "@type": "Person", "name": "محمود السيد محمد علي" },
-  "softwareVersion": "29.17.0"
+  "softwareVersion": "29.18.0"
 }
 </script>
 <title>CalculatorPro — الآلة الحاسبة المتقدمة | دقّة تامة كما Qalculate!</title>
@@ -239,9 +239,10 @@
       </svg>
       CalculatorPro
     </a>
-    <span class="badge">29.17.0</span>
+    <span class="badge">29.18.0</span>
     <nav>
       <a href="#features">المميزات</a>
+      <a href="demo.html">الديمو الحيّ</a>
       <a href="#exact">الدقّة التامّة</a>
       <a href="#vs">المقارنة</a>
       <a href="#news">المستجدّات</a>
@@ -290,7 +291,7 @@
   <!-- ==================== أرقام ==================== -->
   <div class="stats">
     <div class="stat"><b>174+</b><span>دالة مسجَّلة وموثَّقة</span></div>
-    <div class="stat"><b>1934</b><span>اختبارًا ناجحًا — 0 فشل</span></div>
+    <div class="stat"><b>1954</b><span>اختبارًا ناجحًا — 0 فشل</span></div>
     <div class="stat"><b>11</b><span>لغة واجهة</span></div>
     <div class="stat"><b>~45MB</b><span>حجم تنفيذي خفيف</span></div>
   </div>
@@ -341,7 +342,7 @@
     <h2>مقابل Qalculate!</h2>
     <p class="sub">نقيس أنفسنا بالمرجع الأقوى — لنقترب منه أكثر مع كل إصدار.</p>
     <table>
-      <thead><tr><th>القدرة</th><th>Qalculate!</th><th>CalculatorPro 29.17.0</th></tr></thead>
+      <thead><tr><th>القدرة</th><th>Qalculate!</th><th>CalculatorPro 29.18.0</th></tr></thead>
       <tbody>
         <tr><td>القيم الجذرية التامّة (√8 → 2√2)</td><td><span class="yes">✅</span></td><td><span class="yes">✅</span></td></tr>
         <tr><td>الجذر التكعيبي التامّ — cbrt(2) = ∛2 ، cbrt(16) = 2∛2</td><td><span class="yes">✅</span></td><td><span class="yes">✅</span> (29.13.0)</td></tr>
@@ -361,6 +362,25 @@
   <section id="news">
     <h2>آخر المستجدّات</h2>
     <div class="log">
+      <div class="card">
+        <h3>29.18.0 — النواة في المتصفح (WebAssembly) (2026)</h3>
+        <ul>
+          <li><b>ديمو حيّ على الموقع</b>: <a href="demo.html">جرّب النواة الآن</a> — ملف
+            <code>rust_core_bg.wasm</code> بحجم ≈200 كيلوبايت يعمل في متصفحك بلا خادم وبلا إنترنت.</li>
+          <li>محرّك حساب مشترك بحدود وقود: <code>100000</code> خطوة، <code>128</code> عمقًا، <code>4096</code> حرفًا —
+            القنابل تُرفض برسائل عربية، بلا تعليق وبلا انهيار.</li>
+          <li>توازي مفحوص مع بايثون: تطابق بتّ-بتّ في العمليات الأساسية، ≤1e-9 نسبيًّا للدوال المتسامية،
+            وصفر خلاف في الأخطاء على 10000 عينة ضبابية.</li>
+          <li>الصندوق نفسه يستهدف PyO3 (ويندوز) وwasm-bindgen (المتصفح) — بروتوكول JSON موحّد بين الهدفين.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>29.17.0 — نواة Rust المجمّعة: Ed25519 أسرع 31× (2026)</h3>
+        <ul>
+          <li>جسر PyO3 قائم: نواة Ed25519 في Rust بأمان ذاكرة صارم — تصعيب العبث على بصمة MAH‑Defender.</li>
+          <li>صفر خلاف على 3321 حالة ملعوسة، والتحقّق 6422 → 206 ميكروثانية.</li>
+        </ul>
+      </div>
       <div class="card">
         <h3>29.11.0 — الراديان الرمزي (2026)</h3>
         <ul>
@@ -388,7 +408,7 @@
         <a class="btn btn-primary" href="https://github.com/mommmeda/CalculatorPro-site/releases/latest">⬇ آخر إصدار لويندوز</a>
       </div>
       <div class="meta">
-        <b>الإصدار 29.17.0</b> — Windows 7/10/11 (64‑bit)
+        <b>الإصدار 29.18.0</b> — Windows 7/10/11 (64‑bit)
         <ul>
           <li>ملف تنفيذي واحد ~45MB — لا يحتاج تثبيتًا ولا بايثون.</li>
           <li>موقَّع رقميًّا + SHA‑256 — يتحقّق المحدِّث من التوقيع قبل أي تحديث.</li>
