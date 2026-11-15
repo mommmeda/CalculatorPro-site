@@ -19,7 +19,7 @@
   "description": "آلة حاسبة متقدمة: قيم جذرية تامّة (√2/2 لا 0.7071…)، أكثر من 174 دالة، جبر رمزي، رسم دوال، مصفوفات — تعمل بلا إنترنت.",
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
   "author": { "@type": "Person", "name": "محمود السيد محمد علي" },
-  "softwareVersion": "29.18.0"
+  "softwareVersion": "29.19.0"
 }
 </script>
 <title>CalculatorPro — الآلة الحاسبة المتقدمة | دقّة تامة كما Qalculate!</title>
@@ -239,7 +239,7 @@
       </svg>
       CalculatorPro
     </a>
-    <span class="badge">29.18.0</span>
+    <span class="badge">29.19.0</span>
     <nav>
       <a href="#features">المميزات</a>
       <a href="demo.html">الديمو الحيّ</a>
@@ -291,7 +291,7 @@
   <!-- ==================== أرقام ==================== -->
   <div class="stats">
     <div class="stat"><b>174+</b><span>دالة مسجَّلة وموثَّقة</span></div>
-    <div class="stat"><b>1954</b><span>اختبارًا ناجحًا — 0 فشل</span></div>
+    <div class="stat"><b>1979</b><span>اختبارًا ناجحًا — 0 فشل</span></div>
     <div class="stat"><b>11</b><span>لغة واجهة</span></div>
     <div class="stat"><b>~45MB</b><span>حجم تنفيذي خفيف</span></div>
   </div>
@@ -342,7 +342,7 @@
     <h2>مقابل Qalculate!</h2>
     <p class="sub">نقيس أنفسنا بالمرجع الأقوى — لنقترب منه أكثر مع كل إصدار.</p>
     <table>
-      <thead><tr><th>القدرة</th><th>Qalculate!</th><th>CalculatorPro 29.18.0</th></tr></thead>
+      <thead><tr><th>القدرة</th><th>Qalculate!</th><th>CalculatorPro 29.19.0</th></tr></thead>
       <tbody>
         <tr><td>القيم الجذرية التامّة (√8 → 2√2)</td><td><span class="yes">✅</span></td><td><span class="yes">✅</span></td></tr>
         <tr><td>الجذر التكعيبي التامّ — cbrt(2) = ∛2 ، cbrt(16) = 2∛2</td><td><span class="yes">✅</span></td><td><span class="yes">✅</span> (29.13.0)</td></tr>
@@ -362,6 +362,24 @@
   <section id="news">
     <h2>آخر المستجدّات</h2>
     <div class="log">
+      <div class="card">
+        <h3>29.19.0 — مقيّم الكسور الدقيق الموسّع: حساب نسبي تامّ في النواة (2026)</h3>
+        <ul>
+          <li><b>حساب نسبي تامّ</b>: <code>0.1 + 0.2 = 3/10</code> بالضبط — قلب فشل
+            الدقة العائمة الشهير، و<code>2^100000</code> كاملًا (30103 خانة) بلا أي تقريب.</li>
+          <li><b>جذور تامّة للأسس الكسرية</b>: <code>27^(1/3) = 3</code> و
+            <code>16^(1/4) = 2</code> بالضبط عبر جذر صحيح بنيوتوني بلا أعداد عائمة؛
+            والجذر غير النسبي يُرفض صادقًا بدل قيمة زائفة.</li>
+          <li><b>دوال نسبية تامّة</b>: <code>abs/floor/ceil/round/min/max/gcd/lcm</code> —
+            و<code>gcd(2^100, 2^97)</code> على أعداد عملاقة فورًا.</li>
+          <li><b>أداء يسحق المنافس</b>: إعادة هندسة بلا اختزال وسيط
+            (اختصار متبادل) — <code>9425!</code> في <b>8.7ms</b> (كان 106 ثانية =
+            <b>12,000×</b> أسرع) و<code>10000!/9999!</code> في <b>23ms</b> (كان 260 ثانية).</li>
+          <li><b>توازي 100%</b> مع <code>fractions.Fraction</code>: 8000 عينة ضبابية
+            تطابق نصّي كانوني كامل + صفر خلاف في الأخطاء، و25 اختبارًا دائمًا جديدًا.</li>
+          <li>وضع «الكسور التامّة» في <a href="demo.html">الديمو الحيّ</a> — جرّبه الآن في متصفحك.</li>
+        </ul>
+      </div>
       <div class="card">
         <h3>29.18.0 — النواة في المتصفح (WebAssembly) (2026)</h3>
         <ul>

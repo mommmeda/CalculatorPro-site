@@ -118,9 +118,10 @@
       <input id="expr" value="2^10 + sqrt(144) - 5!" spellcheck="false"
              aria-label="التعبير الحسابي">
       <button id="go">احسب</button>
+      <button id="mode" title="تبديل بين المحرّك العائم والكسري التامّ">الكسور التامّة</button>
     </div>
     <div id="result" class="ok">—</div>
-    <div class="chips">
+    <div class="chips" id="chipsFloat">
       <button class="chip" data-e="cos(60)">cos(60)</button>
       <button class="chip" data-e="sin(90) + pi">sin(90) + pi</button>
       <button class="chip" data-e="0.1 + 0.2">0.1 + 0.2</button>
@@ -128,6 +129,18 @@
       <button class="chip" data-e="1/0">1/0 (خطأ منظّم)</button>
       <button class="chip" data-e="foo(2)">foo(2) (خطأ عربي)</button>
       <button class="chip" data-e="2^3^2">2^3^2 (ارتباط يميني)</button>
+    </div>
+    <div class="chips" id="chipsFrac" hidden>
+      <button class="chip" data-e="0.1 + 0.2">0.1 + 0.2 = 3/10 تمامًا</button>
+      <button class="chip" data-e="1/3 + 1/6">1/3 + 1/6</button>
+      <button class="chip" data-e="27^(1/3)">27^(1/3) = 3 (جذر تامّ)</button>
+      <button class="chip" data-e="(-8)^(1/3)">(-8)^(1/3) جذر فردي لسالب</button>
+      <button class="chip" data-e="2^(1/2)">2^(1/2) (رفض صادق: غير نسبي)</button>
+      <button class="chip" data-e="gcd(48,18) + lcm(4,6)">gcd + lcm</button>
+      <button class="chip" data-e="round(7/2) + floor(7/2)">round + floor</button>
+      <button class="chip" data-e="2^100">2^100 تامّ بلا تقريب</button>
+      <button class="chip" data-e="10000!/9999!">10000!/9999! (23ms)</button>
+      <button class="chip" data-e="9425!">9425! عملاق (8.7ms)</button>
     </div>
   </div>
 
@@ -138,6 +151,10 @@
       <span><span class="dot" id="dotSelf"></span><b>فحص Ed25519 الذاتي:</b> <span id="stSelf">…</span></span>
       <span><b>الإصدار:</b> <span id="stVer">…</span></span>
       <span><b>الحدود:</b> <span id="stLim">…</span></span>
+    </div>
+    <div class="status">
+      <span><b>مقيّم الكسور:</b> <span id="stFracVer">…</span></span>
+      <span><b>حدود الكسور:</b> <span id="stFracLim">…</span></span>
     </div>
   </div>
 
@@ -157,28 +174,40 @@
       <code>{"ok":false,"error":"رسالة عربية"}</code> — راقب الشبكة
       في أدوات المطوّع: لا نداء خادم واحد؛ كل شيء يُنفَّذ في نواة الwasm.
     </p>
+    <p>
+      <b>وضع الكسور التامّة</b> (الزر الجديد): حساب نسبٍ دقيق بأعداد
+      كبيرة — <code>0.1 + 0.2</code> يساوي <code>3/10</code> تمامًا
+      (لا <code>0.30000000000000004</code>)، والجذور التامّة
+      <code>27^(1/3) = 3</code> بالضبط، والجذر غير النسبي يُرفض صادقًا
+      بدل قيمة تقريبية زائفة. القنابل تُرفض قبل أي حساب بتقدير حجمي
+      قبلي (حدّ <span id="limBits">1048576</span> بتّ)، والمضروب العملاق
+      <code>9425!</code> في 8.7ms بفضل الاختصار المتبادل.
+    </p>
   </div>
 </main>
 
 <footer>
   نواة مجمّعة من Rust — نفس الصندوق يستهدف PyO3 وwasm-bindgen معًا ·
-  <a href="index.html">CalculatorPro 29.18.0</a>
+  <a href="index.html">CalculatorPro 29.19.0</a>
 </footer>
 
 <!-- مكوّنات النواة المجمّعة بجانب هذه الصفحة:
      rust_core.js (الشريط اللاصق) + rust_core_bg.wasm (الوحدة ≈200KB) -->
 <script type="module">
-  import init, { web_evaluate, web_version, web_limits,
+  import init, { web_evaluate, web_evaluate_fraction, web_version, web_limits,
+                  web_fraction_version, web_fraction_limits,
                   selftest } from "./rust_core.js";
 
   const $ = (id) => document.getElementById(id);
   const btn = $("go"), input = $("expr"), out = $("result");
+  let fracMode = false;
 
   function run() {
     const text = input.value;
+    const engine = fracMode ? web_evaluate_fraction : web_evaluate;
     let parsed;
     try {
-      parsed = JSON.parse(web_evaluate(text));
+      parsed = JSON.parse(engine(text));
     } catch (e) {
       parsed = { ok: false, error: "خطأ داخلي: " + e };
     }
@@ -187,6 +216,16 @@
       ? ("= " + parsed.value)
       : parsed.error;
   }
+
+  $("mode").addEventListener("click", () => {
+    fracMode = !fracMode;
+    $("chipsFloat").hidden = fracMode;
+    $("chipsFrac").hidden = !fracMode;
+    $("mode").textContent = fracMode ? "المحرّك العائم" : "الكسور التامّة";
+    input.value = fracMode ? "0.1 + 0.2" : "2^10 + sqrt(144) - 5!";
+    run();
+    input.focus();
+  });
 
   btn.addEventListener("click", run);
   input.addEventListener("keydown", (e) => {
@@ -215,6 +254,12 @@
     const ok = selftest();
     $("stSelf").textContent = ok ? "ناجح ✓" : "فاشل ✗";
     if (ok) $("dotSelf").classList.add("on");
+    // وضع الكسور التامّة: إصداره وحدوده
+    $("stFracVer").textContent = web_fraction_version();
+    const flim = JSON.parse(web_fraction_limits());
+    $("stFracLim").textContent = ("بتّات " + flim.bits_max + " · أُسّ "
+      + flim.exp_max + " · مضروب " + flim.fact_max);
+    $("limBits").textContent = flim.bits_max;
     run();
   }).catch((e) => {
     $("stLoad").textContent = "فشل التحميل: " + e;

@@ -56,6 +56,60 @@ export function web_evaluate(text) {
 }
 
 /**
+ * تقييم تعبير كسري تامّ من المتصفح — النتيجة نصّ كانوني «3»/«-7/12».
+ * @param {string} text
+ * @returns {string}
+ */
+export function web_evaluate_fraction(text) {
+    let deferred2_0;
+    let deferred2_1;
+    try {
+        const ptr0 = passStringToWasm0(text, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+        const len0 = WASM_VECTOR_LEN;
+        const ret = wasm.web_evaluate_fraction(ptr0, len0);
+        deferred2_0 = ret[0];
+        deferred2_1 = ret[1];
+        return getStringFromWasm0(ret[0], ret[1]);
+    } finally {
+        wasm.__wbindgen_free(deferred2_0, deferred2_1, 1);
+    }
+}
+
+/**
+ * ثوابت حدود المقيّم الكسري (JSON) — عرضها في الديمو.
+ * @returns {string}
+ */
+export function web_fraction_limits() {
+    let deferred1_0;
+    let deferred1_1;
+    try {
+        const ret = wasm.web_fraction_limits();
+        deferred1_0 = ret[0];
+        deferred1_1 = ret[1];
+        return getStringFromWasm0(ret[0], ret[1]);
+    } finally {
+        wasm.__wbindgen_free(deferred1_0, deferred1_1, 1);
+    }
+}
+
+/**
+ * إصدار المقيّم الكسري في الويب.
+ * @returns {string}
+ */
+export function web_fraction_version() {
+    let deferred1_0;
+    let deferred1_1;
+    try {
+        const ret = wasm.web_fraction_version();
+        deferred1_0 = ret[0];
+        deferred1_1 = ret[1];
+        return getStringFromWasm0(ret[0], ret[1]);
+    } finally {
+        wasm.__wbindgen_free(deferred1_0, deferred1_1, 1);
+    }
+}
+
+/**
  * ثوابت حدود المحرّك (JSON) — عرضها في الديمو.
  * @returns {string}
  */
