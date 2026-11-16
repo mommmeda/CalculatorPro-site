@@ -19,7 +19,7 @@
   "description": "آلة حاسبة متقدمة: قيم جذرية تامّة (√2/2 لا 0.7071…)، أكثر من 174 دالة، جبر رمزي، رسم دوال، مصفوفات — تعمل بلا إنترنت.",
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
   "author": { "@type": "Person", "name": "محمود السيد محمد علي" },
-  "softwareVersion": "29.19.0"
+  "softwareVersion": "29.20.0"
 }
 </script>
 <title>CalculatorPro — الآلة الحاسبة المتقدمة | دقّة تامة كما Qalculate!</title>
@@ -239,7 +239,7 @@
       </svg>
       CalculatorPro
     </a>
-    <span class="badge">29.19.0</span>
+    <span class="badge">29.20.0</span>
     <nav>
       <a href="#features">المميزات</a>
       <a href="demo.html">الديمو الحيّ</a>
@@ -291,7 +291,7 @@
   <!-- ==================== أرقام ==================== -->
   <div class="stats">
     <div class="stat"><b>174+</b><span>دالة مسجَّلة وموثَّقة</span></div>
-    <div class="stat"><b>1979</b><span>اختبارًا ناجحًا — 0 فشل</span></div>
+    <div class="stat"><b>2016</b><span>اختبارًا ناجحًا — 0 فشل</span></div>
     <div class="stat"><b>11</b><span>لغة واجهة</span></div>
     <div class="stat"><b>~45MB</b><span>حجم تنفيذي خفيف</span></div>
   </div>
@@ -342,7 +342,7 @@
     <h2>مقابل Qalculate!</h2>
     <p class="sub">نقيس أنفسنا بالمرجع الأقوى — لنقترب منه أكثر مع كل إصدار.</p>
     <table>
-      <thead><tr><th>القدرة</th><th>Qalculate!</th><th>CalculatorPro 29.19.0</th></tr></thead>
+      <thead><tr><th>القدرة</th><th>Qalculate!</th><th>CalculatorPro 29.20.0</th></tr></thead>
       <tbody>
         <tr><td>القيم الجذرية التامّة (√8 → 2√2)</td><td><span class="yes">✅</span></td><td><span class="yes">✅</span></td></tr>
         <tr><td>الجذر التكعيبي التامّ — cbrt(2) = ∛2 ، cbrt(16) = 2∛2</td><td><span class="yes">✅</span></td><td><span class="yes">✅</span> (29.13.0)</td></tr>
@@ -352,7 +352,7 @@
         <tr><td>i^(ln k) / ln(e^k) تامّة</td><td><span class="yes">✅</span></td><td><span class="yes">✅</span> (29.11.0)</td></tr>
         <tr><td>واجهة عربية RTL + 11 لغة</td><td><span class="no">❌</span></td><td><span class="yes">✅</span></td></tr>
         <tr><td>يعمل بلا إنترنت كليًّا</td><td><span class="yes">✅</span></td><td><span class="yes">✅</span></td></tr>
-        <tr><td>وحدات SI كاملة</td><td><span class="yes">✅</span></td><td><span class="part">جزئيّ</span> (تحويلات جاهزة، الباقي قيد البناء)</td></tr>
+        <tr><td>وحدات SI كاملة</td><td><span class="yes">✅</span></td><td><span class="yes">✅</span> كاملة (29.20.0)</td></tr>
         <tr><td>الجذور المركّبة (√(10+2√5))</td><td><span class="yes">✅</span></td><td><span class="no">المرحلة 3</span></td></tr>
       </tbody>
     </table>
@@ -362,6 +362,22 @@
   <section id="news">
     <h2>آخر المستجدّات</h2>
     <div class="log">
+        <div class="card">
+        <h3>29.20.0 — وحدات SI كاملة: البادئات الـ24 وكل الوحدات المشتقّة (2026)</h3>
+        <ul>
+        <li><b>البادئات الـ24 كاملة</b>: من <code>quetta (Q)</code> إلى
+        <code>quecto (q)</code> — <code>1 Tm to m = 10¹² m</code> و
+        <code>5 Ms = 5000000 s</code> مقابل <code>5 ms = 0.005 s</code>.</li>
+        <li><b>الوحدات المشتقّة المتبقية</b>: فاراد، سيمنس، ويبر، تسلا، هنري،
+        لومن، لوكس، بيكريل، غراي، سيفرت، كاتال — <code>1 F to coul/v = 1</code>
+        و<code>1 T to wb/m² = 1</code> بمعاملات كسور تامّة.</li>
+        <li><b>رمز Ω في المحلّل نفسه</b>: <code>220 kΩ to ohm = 220000 ohm</code>
+        و<code>2 Ω * 3 A to v = 6 v</code>.</li>
+        <li><b>الرموز الكبيرة SI</b>: <code>N C K A V J W Hz Pa Wb Gy Sv Bq</code> —
+        <code>10 Pa to pa = 10</code> لا «بيتا-أمبير».</li>
+        <li><b>37 اختبارًا جديدًا</b> — الحزمة الآن <b>2016 اختبارًا</b> خضراء.</li>
+        </ul>
+        </div>
       <div class="card">
         <h3>29.19.0 — مقيّم الكسور الدقيق الموسّع: حساب نسبي تامّ في النواة (2026)</h3>
         <ul>
@@ -426,11 +442,12 @@
         <a class="btn btn-primary" href="https://github.com/mommmeda/CalculatorPro-site/releases/latest">⬇ آخر إصدار لويندوز</a>
       </div>
       <div class="meta">
-        <b>الإصدار 29.19.0</b> — Windows 7/10/11 (64‑bit)
+        <b>الإصدار 29.20.0</b> — Windows 7/10/11 (64‑bit)
         <ul>
           <li>ملف تنفيذي واحد ~45MB — لا يحتاج تثبيتًا ولا بايثون.</li>
           <li>موقَّع رقميًّا + SHA‑256 — يتحقّق المحدِّث من التوقيع قبل أي تحديث.</li>
           <li>برنامج مغلق المصدر — التوزيع عبر ملف تنفيذي موقَّع فقط.</li>
+<li>الترخيص: استخدام شخصي وغير تجاري فقط — لا إعادة توزيع ولا هندسة عكسية.</li>
         </ul>
       </div>
     </div>
@@ -453,7 +470,7 @@
     </details>
     <details>
       <summary>هل هي مجانية؟</summary>
-      <p>مجاني للاستخدام الشخصي وغير التجاري. البرنامج مغلق المصدر — يُوزَّع كملف تنفيذي جاهز فقط، ولا يُتاح كود المصدر للتحميل أو التعديل.</p>
+      <p>مجاني للاستخدام الشخصي وغير التجاري. البرنامج مغلق المصدر — يُوزَّع كملف تنفيذي جاهز فقط، ولا يُتاح كود المصدر للتحميل أو التعديل أو الهندسة العكسية.</p>
     </details>
   </section>
 
